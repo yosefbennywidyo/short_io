@@ -1,4 +1,10 @@
-0.1.4 (2021-01-25)
+0.1.6 (2021-01-25)
+------------------
+
+* fix version on CHANGELOG.md
+* update version to [0.1.6](https://rubygems.org/gems/short_io/versions/0.1.6)
+
+0.1.5 (2021-01-25)
 ------------------
 
 * fix CHANGELOG.md path
