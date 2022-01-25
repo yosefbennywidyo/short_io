@@ -1,6 +1,6 @@
 # ShortIoShortBrandedUrl
 
-[![Gem Version](https://badge.fury.io/rb/short_io.svg)](https://badge.fury.io/rb/short_io) | [![Build Status](https://app.travis-ci.com/yosefbennywidyo/short_io.svg?branch=main)](https://app.travis-ci.com/yosefbennywidyo/short_io) | [![Coverage Status](https://coveralls.io/repos/github/yosefbennywidyo/short_io/badge.svg?branch=main)](https://coveralls.io/github/yosefbennywidyo/short_io?branch=main)
+[![Gem Version](https://badge.fury.io/rb/short_io.svg)](https://badge.fury.io/rb/short_io) | [![Build Status](https://app.travis-ci.com/yosefbennywidyo/short_io.svg?branch=main)](https://app.travis-ci.com/yosefbennywidyo/short_io) | [![codecov](https://codecov.io/gh/yosefbennywidyo/short_io/branch/main/graph/badge.svg?token=MBMxFB57mZ)](https://codecov.io/gh/yosefbennywidyo/short_io)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/short_io`. To experiment with that code, run `bin/console` for an interactive prompt.
 
