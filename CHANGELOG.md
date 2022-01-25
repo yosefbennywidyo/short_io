@@ -1,3 +1,11 @@
+0.1.7 (2021-01-25)
+------------------
+
+* add test
+* add memoization
+* add check_variables method to raise error when `nil` or `empty` on host name or api_key
+* update version to [0.1.7](https://rubygems.org/gems/short_io/versions/0.1.6)
+
 0.1.6 (2021-01-25)
 ------------------
 
