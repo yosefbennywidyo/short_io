@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["yosefbennywidyo@gmail.com"]
 
   spec.summary       = %q{Create short branded URLs with Short.io}
-  spec.homepage      = "https://github.com/yosefbenny/short_io"
+  spec.homepage      = "https://github.com/yosefbennywidyo/short_io"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   #spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/yosefbenny/short_io"
-  spec.metadata["changelog_uri"] = "https://github.com/yosefbenny/short_io/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/yosefbennywidyo/short_io"
+  spec.metadata["changelog_uri"] = "https://github.com/yosefbennywidyo/short_io/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
