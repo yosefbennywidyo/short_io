@@ -22,11 +22,12 @@ Or install it yourself as:
 
 ## Usage
 
-'''ruby
+```ruby
 require 'short_io'
 
 ShortIo::ShortUrl.new('kreasi-guna-semesta.co.id', 'API_KEY',)
-'''
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
