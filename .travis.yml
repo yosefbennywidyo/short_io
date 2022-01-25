@@ -1,6 +1,8 @@
----
 language: ruby
 cache: bundler
 rvm:
-  - 2.7.1
+- 2.7.1
 before_install: gem install bundler -v 2.1.4
+env:
+  global:
+    secure: N+Yyasma8STO5NFjdcmCrn44Zf7x8SbNs6y4bv/FkB5PwcjHYG2sVU/aRB9u8V5F1TuPC7ZPHu74Q9oXgPq2GBnspCNcdvZKzFKLS7euMF+YOeXYSEl7slVvPSq9muuu5lu0cNJbflbTmSElHMXpshamSJxbr9joSvLZMDnJseHXJ+qPKEByB7YQEAFSThbStlgU3oZbRudbM65UBlwxAZ3PZnQ9voYkqPbPkH41SPhtwhLdIOVNR5EK84yypP8rOCCABsxXtfY7vM/ZQpyt/+Ty4cGHDjhiuxypwRFePr2vOqL/w9C2lRNsTRIDrt/krAh0XojIqeObn8d9ZXj+/59OGtAX5YGYKzfMg5Elar24dxUtgKoduD1MLbMBFhB6C8Ch7ULAGvtBDYFYE+0SaMguMr4ZdbxfsNDXIVHYsezLT27ZhSya8/ZOuHcWnveVTl7gktYaY8gdasyNm/uAP99m7/fFgyPYrSaxzLJXAx4EMFxHQtkNTpowETRYE9GFB77NI2QB4cH/5KeOjsvykm8ipmY5Uyfofqm5DV+vHW3zradgzeDogjgoByFlmtCmBpcnAlbmwygxZP303DlVy1pDjizbvITB5beb3HlHzvGbxFjgwvKvnDibjmsrY9NDz5Qzo7hOaJegenUrdgA8wZwV6JOD2Paz6UqKzi1x+2U=
