@@ -6,6 +6,49 @@ class ShortIoTest < Minitest::Test
   DEFAULT_API_KEY         = 'API_KEY'
   SECOND_EXAMPLE_DOMAIN   = 'example-2.com'
   SECOND_EXAMPLE_API_KEY  = 'API_KEY_2'
+  SUCCESS_ADD_DOMAIN      = "{
+    linkType: 'random',
+    state: 'configured',
+    cloaking: false,
+    setupType: 'dns',
+    httpsLinks: false,
+    id: 91576,
+    hostname: 'yourdomain.com',
+    UserId: 9346,
+    updatedAt: '2020-04-23T10:22:47.010Z',
+    createdAt: '2020-04-23T10:22:46.649Z',
+    provider: null,
+    unicodeHostname: 'urdomain.com',
+    clientStorage: null
+  }"
+  SUCCESS_DOMAIN_LIST      = "{
+    id: 7252,
+    hostname: 'yrbrand.co',
+    title: null,
+    segmentKey: null,
+    linkType: 'increment',
+    state: 'not_configured',
+    provider: 'cloudflare',
+    redirect404: 'https://short.cm',
+    hideReferer: 1,
+    caseSensitive: true,
+    exportEnabled: true,
+    cloaking: false,
+    jsRedir: true,
+    incrementCounter: 'A',
+    setupType: 'js',
+    autodeletePeriod: 1,
+    httpsLinks: true,
+    clientStorage: '{'configurationHidden':false}',
+    integrationGA: null,
+    integrationFB: null,
+    integrationAdroll: null,
+    integrationGTM: null,
+    createdAt: '2017-12-07T08:24:41.000Z',
+    updatedAt: '2019-12-24T13:08:30.000Z',
+    TeamId: 1381,
+    unicodeHostname: 'yrbrand.co'
+  }"
 
   def test_that_it_has_latest_version_number
     assert_match ::ShortIo::VERSION, '0.1.8'
@@ -50,6 +93,49 @@ class ShortIoTest < Minitest::Test
     @short_url.yield_self.inspect.include? SHORT_IO_BASE_URL
     @short_url.yield_self.inspect.include? '@http'
     @short_url.yield_self.inspect.include? 'api.short.io:443'
+  end
+
+  def test_it_add_domain
+    success_add_domain
+    create_new_short_url(DEFAULT_HOST_NAME, DEFAULT_API_KEY)
+    @short_url.add_domain
+    assert_equal @short_url.add_domain, SUCCESS_ADD_DOMAIN
+  end
+
+  def success_add_domain
+    stub_request(:post, "https://api.short.io/domains/").
+      with(
+        body: "{\"hideReferer\":\"false\",\"httpsLinks\":\"false\",\"hostname\":\"example.com\",\"linkType\":\"random\"}",
+        headers: {
+              'Accept'=>'application/json',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Authorization'=>'API_KEY',
+              'Content-Type'=>'application/json',
+              'Host'=>'api.short.io',
+              'User-Agent'=>'Ruby'
+        }).
+          to_return(status: 200, body: SUCCESS_ADD_DOMAIN, headers: {})
+  end
+
+  def test_it_domain_list
+    success_domain_list
+    create_new_short_url(DEFAULT_HOST_NAME, DEFAULT_API_KEY)
+    @short_url.domain_list
+    assert_equal @short_url.domain_list, SUCCESS_DOMAIN_LIST
+  end
+
+  def success_domain_list
+    stub_request(:get, "https://api.short.io/domains/").
+      with(
+        headers: {
+              'Accept'=>'application/json',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Authorization'=>'API_KEY',
+              'Content-Type'=>'application/json',
+              'Host'=>'api.short.io',
+              'User-Agent'=>'Ruby'
+        }).
+          to_return(status: 200, body: SUCCESS_DOMAIN_LIST, headers: {})
   end
 
   def create_new_short_url(host_name=DEFAULT_HOST_NAME, api_key=DEFAULT_API_KEY, short_io_base_url=SHORT_IO_BASE_URL, options={})
