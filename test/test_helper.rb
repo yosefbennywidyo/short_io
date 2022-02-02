@@ -8,3 +8,4 @@ SimpleCov.formatter = SimpleCov::Formatter::Codecov
 require "short_io"
 
 require "minitest/autorun"
+require "webmock/minitest"

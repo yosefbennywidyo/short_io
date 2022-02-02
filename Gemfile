@@ -5,5 +5,9 @@ gemspec
 
 gem "rake", "~> 12.0"
 gem "minitest", "~> 5.0"
-gem 'simplecov', require: false, group: :test
-gem 'codecov', require: false, group: :test
+
+group :test do
+  gem 'simplecov', require: false
+  gem 'codecov', require: false
+  gem 'webmock'
+end
