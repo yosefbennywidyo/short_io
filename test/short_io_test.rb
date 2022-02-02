@@ -51,7 +51,7 @@ class ShortIoTest < Minitest::Test
   }"
 
   def test_that_it_has_latest_version_number
-    assert_match ::ShortIo::VERSION, '0.1.8'
+    assert_match ::ShortIo::VERSION, '0.1.9'
   end
 
   def test_it_initialize_short_url_correctly

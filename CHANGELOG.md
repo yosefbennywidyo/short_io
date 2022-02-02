@@ -1,3 +1,9 @@
+0.1.9 (2021-02-03)
+------------------
+
+* add documentation
+* update version to [0.1.9](https://rubygems.org/gems/short_io/versions/0.1.9)
+
 0.1.8 (2021-02-03)
 ------------------
 
