@@ -4,7 +4,7 @@
 
 A Ruby gem to use with [short.io](https://short.io)
 
-[Short IO documentation](https://developers.short.io/docs/deleting-a-domain)
+[ShortIo gem documentation](https://rubydoc.info/gems/short_io)
 
 ## Installation
 
