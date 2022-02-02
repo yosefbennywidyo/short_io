@@ -1,3 +1,11 @@
+0.1.8 (2021-02-03)
+------------------
+
+* add webmock gem
+* add test for add_domain and domain list methods
+* add `:host_name`, `:api_key`, and `:options` attr_reader
+* update version to [0.1.8](https://rubygems.org/gems/short_io/versions/0.1.8)
+
 0.1.7 (2021-01-25)
 ------------------
 
