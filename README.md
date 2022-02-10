@@ -27,7 +27,31 @@ Or install it yourself as:
 ```ruby
 require 'short_io'
 
-ShortIo::ShortUrl.new('kreasi-guna-semesta.co.id', 'API_KEY',)
+ShortIo::ShortUrl.new('kreasi-guna-semesta.co.id', 'API_KEY')
+```
+
+### Add Domain
+
+```ruby
+ShortIo::ShortUrl.new('kreasi-guna-semesta.co.id', 'API_KEY').add_domain
+```
+
+### List Domain
+
+```ruby
+ShortIo::ShortUrl.new('kreasi-guna-semesta.co.id', 'API_KEY').domain_list
+```
+
+### Update Domain
+
+```ruby
+ShortIo::ShortUrl.new('example.com', 'YOUR_API_KEY', {domain_id: YOUR_DOMAIN_ID, root_redirect_url: 'YOUR_LINK'}).update_domain
+```
+
+### Delete Domain
+
+```ruby
+ShortIo::ShortUrl.new('example.com', 'YOUR_API_KEY', {domain_id: YOUR_DOMAIN_ID}).delete_domain
 ```
 
 ## Development
