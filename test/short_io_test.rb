@@ -6,6 +6,10 @@ class ShortIoTest < Minitest::Test
   DEFAULT_API_KEY         = 'API_KEY'
   SECOND_EXAMPLE_DOMAIN   = 'example-2.com'
   SECOND_EXAMPLE_API_KEY  = 'API_KEY_2'
+  SUCCESS_DELETE_OR_UPDATE= "{
+    success: true
+  }"
+
   SUCCESS_ADD_DOMAIN      = "{
     linkType: 'random',
     state: 'configured',
@@ -21,6 +25,7 @@ class ShortIoTest < Minitest::Test
     unicodeHostname: 'urdomain.com',
     clientStorage: null
   }"
+
   SUCCESS_DOMAIN_LIST      = "{
     id: 7252,
     hostname: 'yrbrand.co',
@@ -51,7 +56,7 @@ class ShortIoTest < Minitest::Test
   }"
 
   def test_that_it_has_latest_version_number
-    assert_match ::ShortIo::VERSION, '0.1.9'
+    assert_match ::ShortIo::VERSION, '0.1.10'
   end
 
   def test_it_initialize_short_url_correctly
@@ -125,8 +130,49 @@ class ShortIoTest < Minitest::Test
   end
 
   def success_domain_list
-    stub_request(:get, "https://api.short.io/domains/").
+    stub_request(:get, "https://api.short.io/api/domains").
       with(
+        headers: {
+              'Accept'=>'application/json',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Authorization'=>'API_KEY',
+              'Host'=>'api.short.io',
+              'User-Agent'=>'Ruby'
+        }).
+          to_return(status: 200, body: SUCCESS_DOMAIN_LIST, headers: {})
+  end
+
+  def test_it_delete_domain
+    success_delete_domain
+    create_new_short_url(DEFAULT_HOST_NAME, DEFAULT_API_KEY, nil, { domain_id: 7252 })
+    @short_url.delete_domain
+    assert_equal @short_url.delete_domain, SUCCESS_DELETE_OR_UPDATE
+  end
+
+  def test_it_update_domain
+    success_update_domain
+    create_new_short_url(DEFAULT_HOST_NAME, DEFAULT_API_KEY, nil,{domain_id: 7252, root_redirect_url: 'https://short.cm'})
+    @short_url.update_domain
+    assert_equal @short_url.update_domain, SUCCESS_DELETE_OR_UPDATE
+  end
+
+  def success_delete_domain
+    stub_request(:post, "https://api.short.io/domains/delete/").
+      with(
+        headers: {
+              'Accept'=>'*/*',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Authorization'=>'API_KEY',
+              'Host'=>'api.short.io',
+              'User-Agent'=>'Ruby'
+        }).
+          to_return(status: 200, body: SUCCESS_DELETE_OR_UPDATE, headers: {})
+  end
+
+  def success_update_domain
+    stub_request(:post, "https://api.short.io/domains/settings/").
+      with(
+        body: "{\"rootRedirect\":\"\"}",
         headers: {
               'Accept'=>'application/json',
               'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -135,7 +181,7 @@ class ShortIoTest < Minitest::Test
               'Host'=>'api.short.io',
               'User-Agent'=>'Ruby'
         }).
-          to_return(status: 200, body: SUCCESS_DOMAIN_LIST, headers: {})
+          to_return(status: 200, body: SUCCESS_DELETE_OR_UPDATE, headers: {})
   end
 
   def create_new_short_url(host_name=DEFAULT_HOST_NAME, api_key=DEFAULT_API_KEY, short_io_base_url=SHORT_IO_BASE_URL, options={})
