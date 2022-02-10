@@ -7,18 +7,21 @@ require 'json'
 module ShortIo
   # Add domain and list domains registerd to Short.io
   class ShortUrl
-    REQUEST_TYPE      = 'application/json'
-    SHORT_IO_BASE_URL = 'https://api.short.io/domains/'
+    REQUEST_TYPE          = 'application/json'
+    SHORT_IO_BASE_URL     = 'https://api.short.io/domains/'
+    SHORT_IO_API_BASE_URL = 'https://api.short.io/api/domains'
 
     attr_reader :host_name, :api_key, :options
     
-    def initialize(host_name, api_key, options={})
+    def initialize(host_name, api_key, short_io_base_url=SHORT_IO_BASE_URL, options={})
       @host_name          ||= host_name
       @api_key            ||= api_key
-      @short_io_base_url  ||= SHORT_IO_BASE_URL
+      @short_io_base_url  ||= short_io_base_url
       @options            ||= options
-      options_default_value
-      check_variables
+      unless options.key?(:domain_id)
+        options_default_value
+        check_variables
+      end
     end
 
     # Options Default Value
@@ -45,8 +48,8 @@ module ShortIo
 
     # Prepare request
 
-    def setup
-      @url = URI(SHORT_IO_BASE_URL)
+    def setup(action=nil, base_url=SHORT_IO_BASE_URL)
+      @url = action.nil? ? URI(base_url) : URI(base_url + action)
       @http = Net::HTTP.new(@url.host, @url.port)
       @http.use_ssl = true
       @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -95,17 +98,97 @@ module ShortIo
       return response.read_body
     end
 
+    # Delete a domain
+    #
+    # @return [JSON] return in JSON format.
+    #
+    # @example
+    #   ShortIo::ShortUrl.new('example.com', 'YOUR_API_KEY', {domain_id: YOUR_DOMAIN_ID}).delete_domain
+    #     response:
+    #     {
+    #       success: true
+    #     }
+    #
+    # @see https://developers.short.io/docs/deleting-a-domain
+
+    def delete_domain
+      setup("delete/#{@options[:domain_id]}")
+
+      request = Net::HTTP::Post.new(@url)
+      request["authorization"] = @api_key
+
+      response = @http.request(request)
+      return response.read_body
+    end
+
+    # Udpadating a domain
+    #
+    # @return [JSON] return in JSON format.
+    #
+    # @example
+    #   ShortIo::ShortUrl.new('example.com', 'YOUR_API_KEY', {domain_id: YOUR_DOMAIN_ID, root_redirect_url: 'YOUR_LINK'}).update_domain
+    #     response:
+    #     {
+    #       success: true
+    #     }
+    #
+    # @see https://developers.short.io/docs/updating-a-domain
+
+    def update_domain
+      setup("settings/#{@options[:domain_id]}")
+
+      request = Net::HTTP::Post.new(@url)
+      request["accept"] = REQUEST_TYPE
+      request["content-type"] = REQUEST_TYPE
+      request["authorization"] = @api_key
+      request.body = JSON.generate({ 'rootRedirect': "#{@options[:root_redirect_url]}" })
+
+      response = @http.request(request)
+      return response.read_body
+    end
+
     # Domain List
     #
     # @return [JSON] return domain list in JSON format.
     #
+    # @example
+    #   ShortIo::ShortUrl.new('example.com', 'YOUR_API_KEY').domain_list
+    #     response:
+    #     {
+    #       id: 7252,
+    #      hostname: 'yrbrand.co',
+    #      title: null,
+    #      segmentKey: null,
+    #      linkType: 'increment',
+    #      state: 'not_configured',
+    #      provider: 'cloudflare',
+    #      redirect404: 'https://short.cm',
+    #      hideReferer: 1,
+    #      caseSensitive: true,
+    #      exportEnabled: true,
+    #      cloaking: false,
+    #      jsRedir: true,
+    #      incrementCounter: 'A',
+    #      setupType: 'js',
+    #      autodeletePeriod: 1,
+    #      httpsLinks: true,
+    #      clientStorage: '{"configurationHidden":false}',
+    #      integrationGA: null,
+    #      integrationFB: null,
+    #      integrationAdroll: null,
+    #      integrationGTM: null,
+    #      createdAt: '2017-12-07T08:24:41.000Z',
+    #      updatedAt: '2019-12-24T13:08:30.000Z',
+    #      TeamId: 1381,
+    #      unicodeHostname: 'yrbrand.co'
+    #    }
+    #
     # @see https://developers.short.io/docs/getting-a-list-of-domains
     
     def domain_list
-      setup
+      setup(nil, SHORT_IO_API_BASE_URL)
       request = Net::HTTP::Get.new(@url)
       request["accept"] = REQUEST_TYPE
-      request["content-type"] = REQUEST_TYPE
       request["authorization"] = @api_key
       
       response = @http.request(request)
