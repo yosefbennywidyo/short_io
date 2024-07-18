@@ -9,5 +9,5 @@ gem "minitest", "~> 5.0"
 group :test do
   gem 'simplecov', require: false
   gem 'codecov', require: false
-  gem 'webmock'
+  gem 'webmock', '>= 3.15.1'
 end
